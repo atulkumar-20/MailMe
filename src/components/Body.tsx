@@ -4,10 +4,11 @@ import { Outlet } from 'react-router-dom';
 export const Body = () => {
   return (
     <>
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row">
         <Sidebar />
-        {/* Things inside the children will render with the help of Outlet */}
-        <Outlet /> 
+        <div className="w-full">
+          <Outlet />
+        </div>
       </div>
     </>
   );

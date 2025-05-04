@@ -3,8 +3,30 @@ import { IoIosSearch } from 'react-icons/io';
 import icon from '../../assets/icon.svg';
 import { CiCircleQuestion, CiSettings } from 'react-icons/ci';
 import { PiDotsNineBold } from 'react-icons/pi';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchText, setUser } from '../redux/AppSlice';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { IoLogOutOutline } from 'react-icons/io5';
 
 export const Navbar = () => {
+  const [input, setInput] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSearchText(input));
+  }, [input, dispatch]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(setUser(null));
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <>
       <div className="flex items-center justify-between px-2 sm:px-3 h-14 sm:h-16">
@@ -29,6 +51,8 @@ export const Navbar = () => {
           <div className="flex items-center bg-[#EAF1FB] px-2 py-2 sm:py-3 rounded-full">
             <IoIosSearch size={'20px'} className="text-gray-700 min-w-[20px]" />
             <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
               type="text"
               placeholder="Search"
               className="bg-transparent outline-none ml-2 w-full"
@@ -50,6 +74,13 @@ export const Navbar = () => {
             </div>
             <div className="p-2 sm:p-3 rounded-full hover:bg-gray-100 cursor-pointer">
               <PiDotsNineBold size={'20px'} />
+            </div>
+            <div 
+              onClick={handleLogout}
+              className="p-2 sm:p-3 rounded-full hover:bg-gray-100 cursor-pointer"
+              title="Logout"
+            >
+              <IoLogOutOutline size={'20px'} />
             </div>
             <div className="cursor-pointer">
               <svg width="32" height="32" viewBox="0 0 32 32">
