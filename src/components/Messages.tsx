@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Message } from './Message';
-import { collection, onSnapshot, query, orderBy, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmails } from './redux/AppSlice';
